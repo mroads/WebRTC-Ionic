@@ -1,0 +1,30 @@
+<div id="container">
+  <div id="wrapper">
+    <div id="join" class="animate join" *ngIf="showForm">
+      <h1>Join a Room</h1>
+      <form accept-charset="UTF-8">
+        <p>
+          <input type="text" name="name" value="" id="name" placeholder="Username" [(ngModel)]="name" required>
+        </p>
+        <p>
+          <input type="text" name="room" value="" id="roomName" placeholder="Room" [(ngModel)]="room" required>
+        </p>
+        <p class="submit">
+          <input type="submit" name="commit" value="Join!" (click)="register()" [disabled]="!room || !name">
+        </p>
+      </form>
+    </div>
+    <div id="room" *ngIf="!showForm">
+      <h2 id="room-header"></h2>
+      <div id="participants">
+        <div *ngFor="let name of objectkeys(participants)" class="participant" [class.main]="activeParticipant===name" (click)="activeParticipant=activeParticipant===name?'':name">
+          <video *ngFor="let url of participants[name].videoUrls" [src]="url" autoplay [muted]="participants[name].local"></video>
+          <span>{{name}}</span>
+        </div>
+      </div>
+      <input type="button" id="button-leave" (click)="leaveRoom();" value="Leave room">
+      <!-- <button id="shareScreenBtn" (click)="shareScreen()">share screen
+      </button> -->
+    </div>
+  </div>
+</div>
